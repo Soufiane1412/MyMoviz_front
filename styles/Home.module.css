@@ -21,7 +21,8 @@
 	font-weight: 600;
 }
 
-.logocontainer {
+
+.logoContainer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -34,6 +35,39 @@
 .topBar {
 	background-color: #0D253F;
 	height: 2git 0vh;
+}
+.animContainer{
+	position: relative;
+	display: grid;
+}
+
+.switchContainer{
+	width: 75px;
+	height: 30px;
+	background-color: rgb(255, 255, 255);
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	border-radius: 40px;
+	padding: 10px;
+	cursor: pointer;
+}
+.switchContainer[data-isOn="true"] {
+	justify-content: flex-end;
+}
+ 
+.handle{
+	width: 30px;
+	height: 30px;
+	background-color: rgb(2, 7, 65);
+	border-radius: 30px;
+}
+.titleDiv{
+	position: absolute;
+	z-index: 0;
+	font-size: large;
+	text-transform: uppercase;
+	color: black;
 }
 .backgroundContainer{
 	height:80vh;
