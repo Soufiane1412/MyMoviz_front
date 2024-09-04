@@ -11,9 +11,27 @@ import ImageBack from "../assets/napoleon-2023-movie-joaquin-phoenix-portrait-uh
 import { motion, spring } from "framer-motion";
 
 function Home() {
+
+
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData]=useState([]);
-  const [isOn, setIsOn] =useState(false);
+
+  const ThemeContext = React.createContext();
+
+  const ThemeProvider = ({Movie})=> {
+
+    const [isOn, setIsOn] =useState(false);
+
+    return (
+      <ThemeContext.Provider value={{ isOn, setIsOn }}>
+        {Movie}
+      </ThemeContext.Provider>
+    );
+  }
+
+  
+
+
 
   const toggleSwitch= ()=> setIsOn(!isOn);
 
