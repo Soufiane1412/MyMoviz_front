@@ -34,6 +34,9 @@
 	font-weight: 300;
 	font-size: 14px;
 }
+.name, .description[data-isOn="true"] {
+	color:white;
+}
 .iconContainer {
 	display: flex;
 	flex-direction:column;

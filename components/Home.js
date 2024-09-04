@@ -77,6 +77,7 @@ function Home() {
   }
 
 
+
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -91,25 +92,6 @@ function Home() {
           <Button>♥ {likedMovies.length} movie(s)</Button>
         </Popover>
       </div>
-      {/* <div className={styles.animContainer}>
-        <h1 className={styles.titleDiv}>
-          Show me on scroll
-        </h1>
-        <motion.div
-        animate={{
-          x:0,
-          scale:'1',
-          rotate:'0',
-          zIndex:'1',
-          backgroundColor:'#000',
-          boxShadow:'10px 10px 0 rgba(0,0,0, 0.2)',
-          position:'fixed',
-          transitionEnd: {
-            display:'none',
-          },
-        }}
-        />
-      </div> */}
       <div className={styles.backgroundContainer}>
         <Image
         src={ImageBack}
@@ -126,7 +108,7 @@ function Home() {
         </div>
       </div>
 
-      <div className={styles.moviesContainer}>
+      <div data-isOn={isOn} className={styles.moviesContainer}>
         {movies}
       </div>
     </div>

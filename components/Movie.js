@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faStar, faVideo } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Movie.module.css';
@@ -6,6 +6,9 @@ import styles from '../styles/Movie.module.css';
 function Movie(props) {
   const [watchCount, setWatchCount] = useState(0);
   const [personalNote, setPersonalNote] = useState(0);
+
+  //import ThemeContext hookState :
+  // const {isOn} = useContext(ThemeContext);
 
   // Average evaluation
   const stars = [];
