@@ -1,16 +1,59 @@
+import React from 'react';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faStar, faVideo } from '@fortawesome/free-solid-svg-icons';
+//emotion imports
+import styled from "@emotion/styled";
+import { Global, css } from '@emotion/react';
+
+const MovieContainer = styled.div`
+  display:flex;
+  height:100vh;
+  width:100vw;
+`;
+
+const MovieCard = styled.div`
+
+  display:flex;
+  flex-direction:column;
+  flex-wrap:wrap;
+  height:30vh;
+  width:25vw;
+`;
+
+const Poster = styled.img`
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  width: 35vw;
+  height: 80vh;
+  object-fit:cover;
+  border-radius:20px;
+  transition: {
+    &:hover: {scale: 1.3}
+  }
+
+
+`;
+
+
+const MovieInfo = styled.p`
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  width:100%;
+  height:100%;
+`;
+
 
 
 function Movie(props) {
 
-
   const [watchCount, setWatchCount] = useState(0);
   const [personalNote, setPersonalNote] = useState(0);
 
-  //import ThemeContext hookState :
-  // const {isOn} = useContext(ThemeContext);
 
   // Average evaluation
   const stars = [];
@@ -51,27 +94,19 @@ function Movie(props) {
   }
 
   return (
-    <div>
-      <img src={props.poster} alt={props.title} />
-      <div>
-        <div>
+    <MovieContainer >
+      <MovieCard>
+        <Poster src={props.poster} alt={props.title} />
+        <MovieInfo>
           <span>{props.title}</span>
           <p>{props.overview}</p>
-        </div>
-        <div>
-          <i>
-            {stars}({props.voteCount})
-          </i>
-          <i>
-            {personalStars}({personalNote})
-          </i>
-          <i>
-            <FontAwesomeIcon icon={faVideo} onClick={() => handleWatchMovie()} style={videoIconStyle} className="watch" />({watchCount})
-            <FontAwesomeIcon swapOpacity icon={faHeart} onClick={() => handleLikeMovie()} style={heartIconStyle} className="like" />
-          </i>
-        </div>
-      </div>
-    </div>
+          {stars}({props.voteCount})
+          {personalStars}({personalNote})
+          <FontAwesomeIcon icon={faVideo} onClick={() => handleWatchMovie()} style={videoIconStyle} className="watch" />({watchCount})
+          <FontAwesomeIcon swapOpacity icon={faHeart} onClick={() => handleLikeMovie()} style={heartIconStyle} className="like" />
+        </MovieInfo>
+      </MovieCard>
+    </MovieContainer>
   );
 }
 

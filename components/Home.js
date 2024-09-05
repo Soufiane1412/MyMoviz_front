@@ -11,12 +11,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import Movie from './Movie';
 import 'antd/dist/antd.css';
-import Image from 'next/image'
-import ImageBack from "../assets/napoleon-2023-movie-joaquin-phoenix-portrait-uhd-4k-wallpaper.jpeg";
-import { motion, spring } from "framer-motion";
 
 
 //emotion styles :
+// 1st => theme objects : 
 const lightTheme ={
   background: '#ffffff',
   text:'#000000',
@@ -27,6 +25,8 @@ const darkTheme ={
   text:'#ffffff',
   primary:'#90cea1',
 }
+// 2nd let's define the styled components:
+
 const AppContainer = styled.div`
   background-color:${props=> props.theme.background};
   color: ${props=>props.theme.text};
@@ -35,10 +35,28 @@ const AppContainer = styled.div`
 
 const Header = styled.header`
   display:flex;
+  height:9vh;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding:1px;
   background-color: ${props=>props.theme.primary};
+`;
+
+const ImagePropLeft = styled.span`
+  display:flex;
+  height: 98%;
+  width: 50%;
+  gap:20px;
+
+`;
+
+const ImagePropRight = styled.span`
+  display:flex;
+  gap:20px;
+  height: 75%;
+  border-radius:10px;
+  align-items:center;
+
 `;
 
 const ThemeToggle = styled.button`
@@ -51,9 +69,10 @@ const ThemeToggle = styled.button`
 
 const MoviesContainer = styled.div`
   display: flex;
+  flex-direction:row;
+  height:100vh;
+  width:100vw;
   flex-wrap: wrap;
-  justify-content: center;
-  padding: 2rem;
 `;
 const GLobalStyles = css `
   body {
@@ -67,11 +86,6 @@ const GLobalStyles = css `
 `;
 
 function Home() {
-  const [isOn, setIsOn]=useState(false);
-
-  const toggleSwitch =()=> {
-    setIsOn(!isOn);
-  }
 
   const [isDarkMode, setIsDarkMode]=useState(false);
   const theme = isDarkMode ? darkTheme : lightTheme;
@@ -79,7 +93,6 @@ function Home() {
 
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData]=useState([]);
-
 
 
   useEffect(() => {
@@ -134,37 +147,27 @@ function Home() {
   });
 
 
-  const spring = {
-    type: "spring",
-    stiffness: 500,
-    damping: 20,
-  }
-
-
-
   return (
     <ThemeProvider theme={theme}>
       <Global styles={GLobalStyles} />
       <AppContainer>
         <Header>
-          <img src="logo.png" alt="Logo" />
-          <img src="logoletter.png" alt="Letter logo" />
-          <ThemeToggle onClick={()=> setIsDarkMode(!isDarkMode)} data-isOn={isOn}>
+          <ImagePropLeft>    
+            <img src="logo.png" alt="Logo" />
+            <img src="logoletter.png" alt="Letter logo" />
+          </ImagePropLeft>
+          <ImagePropRight>
+          <ThemeToggle onClick={()=> setIsDarkMode(!isDarkMode)}s>
             {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-            <motion.div layout transition={spring}/>
           </ThemeToggle>
           <Popover title="Liked movies" content={popoverContent} trigger="click">
             <Button>♥ {likedMovies.length} movie(s)</Button>
           </Popover>
-          <Image
-          src={ImageBack}
-          objectFit='contain'
-          fill=''
-          priority
-          alt='Background'
-          />
-          <Input placeholder="What's on your mind? 🤔💭"></Input>
+          </ImagePropRight>
         </Header>
+
+          <Input placeholder="What's on your mind? 🤔💭"></Input>
+
           <MoviesContainer>
             {movies}
           </MoviesContainer>
