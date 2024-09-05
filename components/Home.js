@@ -1,4 +1,10 @@
 import React from 'react';
+// emotion imports 
+import {ThemeProvider} from "@emotion/react";
+import styled from "@emotion/styled";
+import { Global, css } from '@emotion/react';
+
+
 import { useState, useEffect} from 'react';
 import { Popover, Button, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,31 +15,68 @@ import styles from '../styles/Home.module.css';
 import Image from 'next/image'
 import ImageBack from "../assets/napoleon-2023-movie-joaquin-phoenix-portrait-uhd-4k-wallpaper.jpeg";
 import { motion, spring } from "framer-motion";
+import { Header } from 'antd/lib/layout/layout';
+
+
+//emotion styles :
+const lightTheme ={
+  background: '#ffffff',
+  text:'#000000',
+  primary: '#0D253F',
+}
+const darkTheme ={
+  background:'#121212',
+  text:'#ffffff',
+  primary:'#90cea1',
+}
+const AppContainer = styled.div`
+  background-color:${props=> props.theme.background};
+  color: ${props=>props.theme.text};
+  min-height: 100vh;
+`;
+
+const Header = styled.header`
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: ${props=>props.theme.primary};
+`;
+
+const ThemeToggle = styled.button`
+  background-color: ${props=>props.theme.background};
+  color= ${props=>props.theme.text};
+  border: 1px solid ${props=>props.theme.text};
+  padding:0.5rem 1rem;
+  cursor:pointer;
+`;
+
+const MoviesContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
+`;
+const GLobalStyles = css `
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+`;
 
 function Home() {
+
+  const [isDarkMode, setIsDarkMode]=useState(false);
+  const theme = isDarkMode ? darkTheme : lightTheme;
 
 
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData]=useState([]);
 
-  const ThemeContext = React.createContext();
-
-  const ThemeProvider = ({Movie})=> {
-
-    const [isOn, setIsOn] =useState(false);
-
-    return (
-      <ThemeContext.Provider value={{ isOn, setIsOn }}>
-        {Movie}
-      </ThemeContext.Provider>
-    );
-  }
-
-  
-
-
-
-  const toggleSwitch= ()=> setIsOn(!isOn);
 
 
   useEffect(() => {
@@ -97,39 +140,32 @@ function Home() {
 
 
   return (
-    <div className={styles.main}>
-      <div className={styles.header}>
-        <div className={styles.logoContainer}>
+    <ThemeProvider theme={theme}>
+      <Global styles={GLobalStyles} />
+      <AppContainer>
+        <Header>
           <img src="logo.png" alt="Logo" />
-          <img className={styles.logo} src="logoletter.png" alt="Letter logo" />
-        </div>
-        <div data-isOn={isOn} onClick={toggleSwitch} className={styles.switchContainer}>
-          <motion.div className={styles.handle} layout transition={spring}/>
-        </div>
-        <Popover title="Liked movies" content={popoverContent} className={styles.popover} trigger="click">
-          <Button>♥ {likedMovies.length} movie(s)</Button>
-        </Popover>
-      </div>
-      <div className={styles.backgroundContainer}>
-        <Image
-        src={ImageBack}
-        objectFit='contain'
-        fill=''
-        priority
-        alt='Background'
-        />
-        <div className={styles.floatingBanner}>
-          <Input style={{border:"3px" + "linear-gradient(to right, #C04848 0%, #480048  51%, #C04848  100%)"}} 
-          placeholder="What's on your mind? 🤔💭" className={styles.topBanner}
-          >
-          </Input>
-        </div>
-      </div>
-
-      <div data-isOn={isOn} className={styles.moviesContainer}>
-        {movies}
-      </div>
-    </div>
+          <img src="logoletter.png" alt="Letter logo" />
+          <ThemeToggle data-isOn={isOn} onClick={toggleSwitch}>
+            <motion.div layout transition={spring}/>
+          </ThemeToggle>
+          <Popover title="Liked movies" content={popoverContent} className={styles.popover} trigger="click">
+            <Button>♥ {likedMovies.length} movie(s)</Button>
+          </Popover>
+          <Image
+          src={ImageBack}
+          objectFit='contain'
+          fill=''
+          priority
+          alt='Background'
+          />
+          <Input placeholder="What's on your mind? 🤔💭"></Input>
+        </Header>
+          <MoviesContainer>
+            {movies}
+          </MoviesContainer>
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 

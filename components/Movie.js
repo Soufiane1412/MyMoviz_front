@@ -4,6 +4,9 @@ import { faHeart, faStar, faVideo } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Movie.module.css';
 
 function Movie(props) {
+
+  const { isOn } = useContext(ThemeContex);
+
   const [watchCount, setWatchCount] = useState(0);
   const [personalNote, setPersonalNote] = useState(0);
 
