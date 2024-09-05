@@ -1,11 +1,10 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faStar, faVideo } from '@fortawesome/free-solid-svg-icons';
-import styles from '../styles/Movie.module.css';
+
 
 function Movie(props) {
 
-  const { isOn } = useContext(ThemeContex);
 
   const [watchCount, setWatchCount] = useState(0);
   const [personalNote, setPersonalNote] = useState(0);
@@ -52,21 +51,21 @@ function Movie(props) {
   }
 
   return (
-    <div className={styles.card}>
-      <img className={styles.image} src={props.poster} alt={props.title} />
-      <div className={styles.textContainer}>
+    <div>
+      <img src={props.poster} alt={props.title} />
+      <div>
         <div>
-          <span className={styles.name}>{props.title}</span>
-          <p className={styles.description}>{props.overview}</p>
+          <span>{props.title}</span>
+          <p>{props.overview}</p>
         </div>
-        <div className={styles.iconContainer}>
-          <i className={styles.iconGroup}>
+        <div>
+          <i>
             {stars}({props.voteCount})
           </i>
-          <i className={styles.iconGroup}>
+          <i>
             {personalStars}({personalNote})
           </i>
-          <i className={styles.iconGroup}>
+          <i>
             <FontAwesomeIcon icon={faVideo} onClick={() => handleWatchMovie()} style={videoIconStyle} className="watch" />({watchCount})
             <FontAwesomeIcon swapOpacity icon={faHeart} onClick={() => handleLikeMovie()} style={heartIconStyle} className="like" />
           </i>

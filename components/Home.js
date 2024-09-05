@@ -11,11 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import Movie from './Movie';
 import 'antd/dist/antd.css';
-import styles from '../styles/Home.module.css';
 import Image from 'next/image'
 import ImageBack from "../assets/napoleon-2023-movie-joaquin-phoenix-portrait-uhd-4k-wallpaper.jpeg";
 import { motion, spring } from "framer-motion";
-import { Header } from 'antd/lib/layout/layout';
 
 
 //emotion styles :
@@ -69,6 +67,11 @@ const GLobalStyles = css `
 `;
 
 function Home() {
+  const [isOn, setIsOn]=useState(false);
+
+  const toggleSwitch =()=> {
+    setIsOn(!isOn);
+  }
 
   const [isDarkMode, setIsDarkMode]=useState(false);
   const theme = isDarkMode ? darkTheme : lightTheme;
@@ -112,15 +115,15 @@ function Home() {
 
   const likedMoviesPopover = likedMovies.map((data, i) => {
     return (
-      <div key={i} className={styles.likedMoviesContainer}>
-        <span className="likedMovie">{data}</span>
-        <FontAwesomeIcon icon={faCircleXmark} onClick={() => updateLikedMovies(data)} className={styles.crossIcon} />
+      <div key={i}>
+        <span>{data}</span>
+        <FontAwesomeIcon icon={faCircleXmark} onClick={() => updateLikedMovies(data)}/>
       </div>
     );
   });
 
   const popoverContent = (
-    <div className={styles.popoverContent}>
+    <div>
       {likedMoviesPopover}
     </div>
   );
@@ -146,10 +149,11 @@ function Home() {
         <Header>
           <img src="logo.png" alt="Logo" />
           <img src="logoletter.png" alt="Letter logo" />
-          <ThemeToggle data-isOn={isOn} onClick={toggleSwitch}>
+          <ThemeToggle onClick={()=> setIsDarkMode(!isDarkMode)} data-isOn={isOn}>
+            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
             <motion.div layout transition={spring}/>
           </ThemeToggle>
-          <Popover title="Liked movies" content={popoverContent} className={styles.popover} trigger="click">
+          <Popover title="Liked movies" content={popoverContent} trigger="click">
             <Button>♥ {likedMovies.length} movie(s)</Button>
           </Popover>
           <Image
