@@ -6,35 +6,17 @@ import { faHeart, faStar, faVideo } from '@fortawesome/free-solid-svg-icons';
 import styled from "@emotion/styled";
 import { Global, css } from '@emotion/react';
 
-const MovieContainer = styled.div`
-    display:flex;
-
-`;
 
 const MovieCard = styled.div`
+  
+  gap:20px;
 `;
 
 const Poster = styled.img`
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  width: 35vw;
-  height: 80vh;
-  object-fit:cover;
-  border-radius:20px;
 `;
-
 
 const MovieInfo = styled.p`
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  flex-wrap:wrap;
-  width:100%;
-  height:100%;
 `;
-
 
 
 function Movie(props) {
@@ -82,7 +64,6 @@ function Movie(props) {
   }
 
   return (
-    <MovieContainer >
       <MovieCard>
         <Poster src={props.poster} alt={props.title} />
         <MovieInfo>
@@ -94,7 +75,7 @@ function Movie(props) {
           <FontAwesomeIcon swapOpacity icon={faHeart} onClick={() => handleLikeMovie()} style={heartIconStyle} className="like" />
         </MovieInfo>
       </MovieCard>
-    </MovieContainer>
+
   );
 }
 

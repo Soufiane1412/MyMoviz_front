@@ -15,6 +15,7 @@ import 'antd/dist/antd.css';
 
 
 const color = 'hotpink';
+
 //emotion styles :
 // 1st => theme objects : 
 const lightTheme ={
@@ -71,7 +72,10 @@ const ThemeToggle = styled.button`
 `;
 
 const MoviesContainer = styled.div`
-
+ display:flex;
+ flex-direction:column;
+ flex-wrap:wrap;
+  gap:20px;
 `;
 
 const GLobalStyles = css `
