@@ -13,21 +13,27 @@ import Movie from './Movie';
 import 'antd/dist/antd.css';
 
 
+
+const color = 'hotpink';
 //emotion styles :
 // 1st => theme objects : 
 const lightTheme ={
   background: '#ffffff',
   text:'#000000',
-  primary: '#0D253F',
+  primary: '#511a33',
 }
 const darkTheme ={
   background:'#121212',
   text:'#ffffff',
-  primary:'#90cea1',
+  primary:'#073c16',
 }
 // 2nd let's define the styled components:
 
 const AppContainer = styled.div`
+  display: flex;
+  flex-direction:column;
+  flex-wrap:wrap;
+  width:100vw;
   background-color:${props=> props.theme.background};
   color: ${props=>props.theme.text};
   min-height: 100vh;
@@ -38,7 +44,7 @@ const Header = styled.header`
   height:9vh;
   justify-content: space-between;
   align-items: center;
-  padding:1px;
+  padding:5px;
   background-color: ${props=>props.theme.primary};
 `;
 
@@ -46,17 +52,14 @@ const ImagePropLeft = styled.span`
   display:flex;
   height: 98%;
   width: 50%;
-  gap:20px;
-
+  gap: 20px;
 `;
 
 const ImagePropRight = styled.span`
   display:flex;
   gap:20px;
   height: 75%;
-  border-radius:10px;
   align-items:center;
-
 `;
 
 const ThemeToggle = styled.button`
@@ -68,12 +71,9 @@ const ThemeToggle = styled.button`
 `;
 
 const MoviesContainer = styled.div`
-  display: flex;
-  flex-direction:row;
-  height:100vh;
-  width:100vw;
-  flex-wrap: wrap;
+
 `;
+
 const GLobalStyles = css `
   body {
     margin: 0;
@@ -81,7 +81,7 @@ const GLobalStyles = css `
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale;'
   }
 `;
 
@@ -150,7 +150,7 @@ function Home() {
   return (
     <ThemeProvider theme={theme}>
       <Global styles={GLobalStyles} />
-      <AppContainer>
+      <AppContainer> 
         <Header>
           <ImagePropLeft>    
             <img src="logo.png" alt="Logo" />
@@ -168,9 +168,9 @@ function Home() {
 
           <Input placeholder="What's on your mind? 🤔💭"></Input>
 
-          <MoviesContainer>
-            {movies}
-          </MoviesContainer>
+        <MoviesContainer>
+          {movies}
+        </MoviesContainer>
       </AppContainer>
     </ThemeProvider>
   );

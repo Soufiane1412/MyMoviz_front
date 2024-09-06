@@ -7,18 +7,11 @@ import styled from "@emotion/styled";
 import { Global, css } from '@emotion/react';
 
 const MovieContainer = styled.div`
-  display:flex;
-  height:100vh;
-  width:100vw;
+    display:flex;
+
 `;
 
 const MovieCard = styled.div`
-
-  display:flex;
-  flex-direction:column;
-  flex-wrap:wrap;
-  height:30vh;
-  width:25vw;
 `;
 
 const Poster = styled.img`
@@ -29,11 +22,6 @@ const Poster = styled.img`
   height: 80vh;
   object-fit:cover;
   border-radius:20px;
-  transition: {
-    &:hover: {scale: 1.3}
-  }
-
-
 `;
 
 
