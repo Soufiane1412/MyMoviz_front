@@ -8,11 +8,13 @@ import { Global, css } from '@emotion/react';
 
 
 const MovieCard = styled.div`
-  
-  gap:20px;
+  display:flex;
+  flex-direction:column;
 `;
 
 const Poster = styled.img`
+  height:50vh;
+  border-radius:25px;
 `;
 
 const MovieInfo = styled.p`
@@ -67,12 +69,16 @@ function Movie(props) {
       <MovieCard>
         <Poster src={props.poster} alt={props.title} />
         <MovieInfo>
-          <span>{props.title}</span>
-          <p>{props.overview}</p>
-          {stars}({props.voteCount})
-          {personalStars}({personalNote})
-          <FontAwesomeIcon icon={faVideo} onClick={() => handleWatchMovie()} style={videoIconStyle} className="watch" />({watchCount})
-          <FontAwesomeIcon swapOpacity icon={faHeart} onClick={() => handleLikeMovie()} style={heartIconStyle} className="like" />
+          <span>
+            <p>{props.title}</p>
+            {props.overview}
+          </span>
+          <p>{stars}({props.voteCount})</p>
+          <p>{personalStars}({personalNote})</p>
+          <p>
+            <FontAwesomeIcon icon={faVideo} onClick={() => handleWatchMovie()} style={videoIconStyle} className="watch" />({watchCount})
+            <FontAwesomeIcon swapOpacity icon={faHeart} onClick={() => handleLikeMovie()} style={heartIconStyle} className="like" />
+          </p>
         </MovieInfo>
       </MovieCard>
 

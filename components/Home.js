@@ -21,12 +21,12 @@ const color = 'hotpink';
 const lightTheme ={
   background: '#ffffff',
   text:'#000000',
-  primary: '#511a33',
+  primary: '#09726f',
 }
 const darkTheme ={
   background:'#121212',
   text:'#ffffff',
-  primary:'#073c16',
+  primary:'#021c09',
 }
 // 2nd let's define the styled components:
 
@@ -37,7 +37,6 @@ const AppContainer = styled.div`
   width:100vw;
   background-color:${props=> props.theme.background};
   color: ${props=>props.theme.text};
-  min-height: 100vh;
 `;
 
 const Header = styled.header`
@@ -71,11 +70,19 @@ const ThemeToggle = styled.button`
   cursor:pointer;
 `;
 
+const MovieTitles = styled.h1`
+  display:flex;
+  font-size:20px;
+`;
+
 const MoviesContainer = styled.div`
- display:flex;
- flex-direction:column;
- flex-wrap:wrap;
-  gap:20px;
+  display:flex;
+  justify-content:center;
+  overflow:scroll;
+  width:100vw;
+  height:100vh;
+  gap:30px;
+  padding:40px;
 `;
 
 const GLobalStyles = css `
@@ -97,6 +104,7 @@ function Home() {
 
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData]=useState([]);
+
 
 
   useEffect(() => {
@@ -171,10 +179,11 @@ function Home() {
         </Header>
 
           <Input placeholder="What's on your mind? 🤔💭"></Input>
-
+        <MovieTitles>Latest Release</MovieTitles>
         <MoviesContainer>
           {movies}
         </MoviesContainer>
+
       </AppContainer>
     </ThemeProvider>
   );
