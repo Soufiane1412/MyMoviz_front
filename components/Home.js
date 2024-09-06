@@ -12,6 +12,8 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import Movie from './Movie';
 import 'antd/dist/antd.css';
 
+// import flaticons:
+import {Brightness, Moon} from "react-flaticons"
 
 
 const color = 'hotpink';
@@ -170,7 +172,7 @@ function Home() {
           </ImagePropLeft>
           <ImagePropRight>
           <ThemeToggle onClick={()=> setIsDarkMode(!isDarkMode)}s>
-            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+            {isDarkMode ? <Moon></Moon> : <Brightness></Brightness> }
           </ThemeToggle>
           <Popover title="Liked movies" content={popoverContent} trigger="click">
             <Button>♥ {likedMovies.length} movie(s)</Button>
