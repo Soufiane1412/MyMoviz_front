@@ -19,20 +19,21 @@ import 'antd/dist/antd.css';
 //emotion styles :
 // 1st => theme objects : 
 const lightTheme ={
-  background: '#ffffff',
-  text:'#000000',
-  primary: '#09726f',
+  background: 'linear-gradient(#e66465, #9198e5)',
+  text:'#000F36',
+  primary:'white',
 }
 const darkTheme ={
   background:'#121212',
   text:'#ffffff',
-  primary:'#021c09',
+  primary:'#121212',
 }
 // 2nd let's define the styled components:
 
 const AppContainer = styled.div`
   display: flex;
   flex-direction:column;
+  align-items:center;
   flex-wrap:wrap;
   width:100vw;
   background-color:${props=> props.theme.background};
@@ -41,9 +42,9 @@ const AppContainer = styled.div`
 
 const Header = styled.header`
   display:flex;
+  width:100vw;
+  justify-content:space-between;
   height:9vh;
-  justify-content: space-between;
-  align-items: center;
   padding:5px;
   background-color: ${props=>props.theme.primary};
 `;
@@ -52,12 +53,13 @@ const ImagePropLeft = styled.span`
   display:flex;
   height: 98%;
   width: 50%;
-  gap: 20px;
+  gap: 50px;
 `;
 
 const ImagePropRight = styled.span`
   display:flex;
-  gap:20px;
+  gap:40px;
+  padding:30px;
   height: 75%;
   align-items:center;
 `;
@@ -71,15 +73,32 @@ const ThemeToggle = styled.button`
   display:flex;
   align-items:center;
   justify-content:center;
+  border-radius:15px;
+`;
+
+const InputText = styled.input`
+display:flex;
+margin-top:40px;
+color:black;
+justify-content:center;
+border-radius:10px; 
+border: solid 3px #B5702F;
+font-family:helvetica;
+align-items:center;
+width:50%;
+
 `;
 
 const MovieTitles = styled.h1`
   display:flex;
-  font-family:helvetica;
+  font-family: SF Pro, Helvetica Neue;
   color:${props=>props.theme.text};
-  font-size:500;
-  border-botto
+  font-size:400;
+  font-weight:800;
+  margin-bottom:0;
+  margin-top:50px;
 `;
+
 
 const MoviesContainer = styled.div`
   display:flex;
@@ -87,14 +106,15 @@ const MoviesContainer = styled.div`
   overflow:scroll;
   width:100vw;
   height:100vh;
+  margin-top:0;
   gap:30px;
-  padding:40px;
+  padding:5px;
 `;
 
 const GLobalStyles = css `
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    font-family: SF Pro, helvetica neue, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -177,18 +197,15 @@ function Home() {
           <ImagePropRight>
           <ThemeToggle 
             aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            onClick={()=> setIsDarkMode(!isDarkMode)}s
-            {switchMode()}
-            > 
+            onClick={()=> setIsDarkMode(!isDarkMode)}>{switchMode()}
           </ThemeToggle>
           <Popover title="Liked movies" content={popoverContent} trigger="click">
             <Button>♥ {likedMovies.length} movie(s)</Button>
           </Popover>
           </ImagePropRight>
         </Header>
-
-          <Input placeholder="What's on your mind? 🤔💭"></Input>
-        <MovieTitles>Latest Release</MovieTitles>
+        <InputText placeholder="Find a movie 🍿"></InputText>
+        <MovieTitles>Latest Releases</MovieTitles>
         <MoviesContainer>
           {movies}
         </MoviesContainer>

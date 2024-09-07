@@ -13,12 +13,73 @@ const MovieCard = styled.div`
 `;
 
 const Poster = styled.img`
-  height:50vh;
+  height:45vh;
+  width:18vw;
   border-radius:25px;
+  box-shadow: 10px 6px 4px #0e0925;
+`;
+
+const FlipCard = styled.div`
+  background: transparent;
+  height: 45vh;
+  width: 18vw;
+  perspective: 1000px;
+`;
+
+const FlipCardInner = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+  ${FlipCard}:hover & {
+    transform: rotateY(180deg);
+  }
+`;
+
+const FlipCardSide = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 25px;
+  overflow: hidden;
+`;
+
+const FlipCardFront = styled(FlipCardSide)`
+  background-color: #bbb;
+  color: black;
+`;
+
+const FlipCardBack = styled(FlipCardSide)`
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+const MovieOverview = styled.div`
+  text-align:center;
+  color:${props=>props.theme.text};
+  font-size:15px;
 `;
 
 const MovieInfo = styled.p`
+  
 `;
+
+const MovieTitle = styled.h2`
+  margin-top:15px;
+  font-family:SF Pro, helvetica neue;
+`; 
 
 
 function Movie(props) {
@@ -29,9 +90,9 @@ function Movie(props) {
 
   // Average evaluation
   const stars = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i <5; i++) {
     let style = {};
-    if (i < props.voteAverage - 1) {
+    if (i < props.voteAverage - 3) {
       style = { 'color': '#f1c40f' };
     }
     stars.push(<FontAwesomeIcon key={i} icon={faStar} style={style} />);
@@ -57,7 +118,7 @@ function Movie(props) {
 
   // Personal note
   const personalStars = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     let style = { 'cursor': 'pointer' };
     if (i < personalNote) {
       style = { 'color': '#2196f3', 'cursor': 'pointer' };
@@ -66,22 +127,27 @@ function Movie(props) {
   }
 
   return (
-      <MovieCard>
-        <Poster src={props.poster} alt={props.title} />
-        <MovieInfo>
-          <span>
-            <p>{props.title}</p>
-            {props.overview}
-          </span>
-          <p>{stars}({props.voteCount})</p>
-          <p>{personalStars}({personalNote})</p>
-          <p>
-            <FontAwesomeIcon icon={faVideo} onClick={() => handleWatchMovie()} style={videoIconStyle} className="watch" />({watchCount})
-            <FontAwesomeIcon swapOpacity icon={faHeart} onClick={() => handleLikeMovie()} style={heartIconStyle} className="like" />
-          </p>
-        </MovieInfo>
-      </MovieCard>
-
+    <MovieCard>
+    <FlipCard>
+      <FlipCardInner>
+        <FlipCardFront>
+          <Poster src={props.poster} alt={props.title} />
+        </FlipCardFront>
+        <FlipCardBack>
+          <MovieOverview>{props.overview}</MovieOverview>
+        </FlipCardBack>
+      </FlipCardInner>
+    </FlipCard>
+    <MovieInfo>
+      <MovieTitle>{props.title}</MovieTitle>
+      <p>{stars} ({props.voteCount}) votes</p>
+      <p>{personalStars} ({personalNote}) stars</p>
+      <p>
+        <FontAwesomeIcon icon={faVideo} onClick={() => handleWatchMovie()} style={videoIconStyle} className="watch" /> ({watchCount})
+        <FontAwesomeIcon icon={faHeart} onClick={() => handleLikeMovie()} style={heartIconStyle} className="like" />
+      </p>
+    </MovieInfo>
+  </MovieCard>
   );
 }
 
