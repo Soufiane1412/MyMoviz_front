@@ -10,20 +10,24 @@ import { Global, css } from '@emotion/react';
 const MovieCard = styled.div`
   display:flex;
   flex-direction:column;
+  margin-bottom:0;
+  padding-bottom:0;
+  height:85vh;
 `;
 
 const Poster = styled.img`
-  height:45vh;
+  height:55vh;
   width:18vw;
   border-radius:25px;
   box-shadow: 10px 6px 4px #0e0925;
+  object-fit:cover;
 `;
 
 const FlipCard = styled.div`
   background: transparent;
-  height: 45vh;
+  height: 55vh;
   width: 18vw;
-  perspective: 200px;
+  perspective: 800px;
 `;
 
 const FlipCardInner = styled.div`
@@ -74,6 +78,7 @@ const MovieOverview = styled.div`
 `;
 
 const MovieInfo = styled.p`
+
   
 `;
 

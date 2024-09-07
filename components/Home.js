@@ -106,6 +106,7 @@ const MoviesContainer = styled.div`
   overflow:scroll;
   width:100vw;
   height:100vh;
+  mask-image:linear-gradient(to right, black 50px, black calc(80% - 80px), transparent 100%);
   margin-top:0;
   gap:30px;
   padding:5px;
