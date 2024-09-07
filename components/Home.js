@@ -8,15 +8,13 @@ import { Global, css } from '@emotion/react';
 import { useState, useEffect} from 'react';
 import { Popover, Button, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaSun, FaMoon } from 'react-icons/fa';
+
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+
 import Movie from './Movie';
 import 'antd/dist/antd.css';
 
-// import flaticons:
-import {Brightness, Moon} from "react-flaticons"
-
-
-const color = 'hotpink';
 
 //emotion styles :
 // 1st => theme objects : 
@@ -70,11 +68,17 @@ const ThemeToggle = styled.button`
   border: 1px solid ${props=>props.theme.text};
   padding:0.5rem 1rem;
   cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 `;
 
 const MovieTitles = styled.h1`
   display:flex;
-  font-size:20px;
+  font-family:helvetica;
+  color:${props=>props.theme.text};
+  font-size:500;
+  border-botto
 `;
 
 const MoviesContainer = styled.div`
@@ -102,7 +106,6 @@ function Home() {
 
   const [isDarkMode, setIsDarkMode]=useState(false);
   const theme = isDarkMode ? darkTheme : lightTheme;
-
 
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData]=useState([]);
@@ -160,6 +163,7 @@ function Home() {
     return <Movie key={i} updateLikedMovies={updateLikedMovies} isLiked={isLiked} title={data.title} overview={data.overview} poster={data.poster} voteAverage={data.voteAverage} voteCount={data.voteCount} />;
   });
 
+  const switchMode =()=> isDarkMode ? <FaMoon/> : <FaSun/>
 
   return (
     <ThemeProvider theme={theme}>
@@ -171,8 +175,11 @@ function Home() {
             <img src="logoletter.png" alt="Letter logo" />
           </ImagePropLeft>
           <ImagePropRight>
-          <ThemeToggle onClick={()=> setIsDarkMode(!isDarkMode)}s>
-            {isDarkMode ? <Moon></Moon> : <Brightness></Brightness> }
+          <ThemeToggle 
+            aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            onClick={()=> setIsDarkMode(!isDarkMode)}s
+            {switchMode()}
+            > 
           </ThemeToggle>
           <Popover title="Liked movies" content={popoverContent} trigger="click">
             <Button>♥ {likedMovies.length} movie(s)</Button>
