@@ -134,10 +134,10 @@ function Home() {
 
 
   useEffect(() => {
-    fetch('https://mymovizpart5backend-snowy.vercel.app/movies')
+    fetch('https://api.themoviedb.org/3/discover/movies')
     .then(results => results.json())
     .then(data => {
-      console.log('👨🏻‍💻retrieved data', data)
+      console.log('👨🏻‍💻retrieved data 💫', data)
       const movies = []
       for (const movie of data.movies) {
         movies.push({
@@ -149,6 +149,16 @@ function Home() {
 
           })
   //   { title: 'The Dark Knight', poster: 'thedarkknight.jpg', voteAverage: 8.5, voteCount: 27_547, overview: 'Batman raises the stakes in his war on crime and sets out to dismantle the remaining criminal organizations that plague the streets.' },
+          useEffect(()=> {
+
+            fetch('https://mymovizpart5backend-snowy.vercel.app/TVshows')
+            .then(results=> results.json())
+            .then(data => {
+              console.log('TVShows ✨', data);
+            })
+          })
+
+
 
       }
       setMoviesData(movies)
