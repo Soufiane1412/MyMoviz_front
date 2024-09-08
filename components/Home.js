@@ -130,40 +130,51 @@ function Home() {
 
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData]=useState([]);
+  const [topRatedOnes, setTopRatedOnes]=useState([]);
 
 
 
   useEffect(() => {
-    fetch('https://api.themoviedb.org/3/discover/movies')
+    fetch('https://mymovizpart5backend-snowy.vercel.app/movies')
     .then(results => results.json())
     .then(data => {
       console.log('👨🏻‍💻retrieved data 💫', data)
       const movies = []
       for (const movie of data.movies) {
-        movies.push({
+        movies.push({ 
           title: movie.title,
           voteAverage: movie.vote_average,
           voteCount: movie.vote_count,
           overview: movie.overview.substring(0,250)+"...",
           poster: "https://image.tmdb.org/t/p/w500"+movie.poster_path,
 
-          })
-  //   { title: 'The Dark Knight', poster: 'thedarkknight.jpg', voteAverage: 8.5, voteCount: 27_547, overview: 'Batman raises the stakes in his war on crime and sets out to dismantle the remaining criminal organizations that plague the streets.' },
-          useEffect(()=> {
-
-            fetch('https://mymovizpart5backend-snowy.vercel.app/TVshows')
-            .then(results=> results.json())
-            .then(data => {
-              console.log('TVShows ✨', data);
-            })
-          })
-
-
+          });
+  //   { title: 'The Dark Knight', poster: 'thedarkknight.jpg', voteAverage: 8.5, voteCount: 27_547, overview: 'Batman raises the stakes in his war on crime and sets out to dismantle the remaining criminal organizations that plague the streets.' }
 
       }
       setMoviesData(movies)
     })
   }, [] )
+
+  useEffect(()=> {
+
+    fetch('https://api.themoviedb.org/3/movie/upcoming')
+    .then(results=> results.json())
+    .then(data => {
+      console.log('☄️ topRated ones', data)
+      const topRated = []
+      for (const movie of data.results) {
+        topRated.push({
+          title: movie.name,
+          voteAverage: movie.vote_average,
+          voteCount: movie.vote_count,
+          overview: movie.overview.substring(0,250)+"...",
+          poster: "https://image.tmdb.org/t/p/w500"+movie.backdrop_path,
+  })
+  }
+  setTopRatedOnes(topRated)
+});
+}, []);
 
   // Liked movies (inverse data flow)
   const updateLikedMovies = (movieTitle) => {
@@ -188,6 +199,12 @@ function Home() {
       {likedMoviesPopover}
     </div>
   );
+
+  const topRatedMovies = topRatedOnes.map((data,i) => {
+      const isLiked2 = likedMovies.some(movie=>movie===data.name);
+      return <Movie key={i} isliked2={isLiked2} title={results.name} overview={results.overview} poster={results.backdrop_path} voteAverage={results.vote_average} voteCount={results.vote_count} />
+
+  });
 
   const movies = moviesData.map((data, i) => {
     const isLiked = likedMovies.some(movie => movie === data.title);
@@ -220,7 +237,9 @@ function Home() {
         <MoviesContainer>
           {movies}
         </MoviesContainer>
-
+        <MoviesContainer>
+          {topRatedMovies}
+        </MoviesContainer>
       </AppContainer>
     </ThemeProvider>
   );
