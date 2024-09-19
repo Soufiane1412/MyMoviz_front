@@ -86,7 +86,6 @@ border: solid 3px #B5702F;
 font-family:helvetica;
 align-items:center;
 width:50%;
-
 `;
 
 const MovieTitles = styled.h1`
