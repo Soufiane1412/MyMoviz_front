@@ -156,24 +156,17 @@ function Home() {
   }, [] )
 
   useEffect(()=> {
-
+    try {
     fetch('https://api.themoviedb.org/3/movie/upcoming')
     .then(results=> results.json())
     .then(data => {
-      console.log('☄️ topRated ones', data)
-      const topRated = []
-      for (const movie of data.results) {
-        topRated.push({
-          title: movie.name,
-          voteAverage: movie.vote_average,
-          voteCount: movie.vote_count,
-          overview: movie.overview.substring(0,250)+"...",
-          poster: "https://image.tmdb.org/t/p/w500"+movie.backdrop_path,
-  })
-  }
-  setTopRatedOnes(topRated)
-});
-}, []);
+    console.log('UpcomingMovies data:', data)
+    setTopRatedOnes(data.upcomingMovies)
+    });
+    } catch {
+      console.error('Failed To Fetch upcomingMovies', err)
+    }
+  }, []);
 
   // Liked movies (inverse data flow)
   const updateLikedMovies = (movieTitle) => {
