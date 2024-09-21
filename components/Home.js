@@ -162,6 +162,7 @@ function Home() {
     .then(data => {
     console.log('🎯 UpcomingMovies data:', data)
     setTopRatedOnes(data.upcomingMovies)
+    console.log('🙌🏼 fetched upcoming movies', data.upcomingMovies)
     });
     } catch {
       console.error('Failed To Fetch upcomingMovies', err)
