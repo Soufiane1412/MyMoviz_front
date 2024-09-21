@@ -137,7 +137,7 @@ function Home() {
     fetch('https://mymovizpart5backend-snowy.vercel.app/movies')
     .then(results => results.json())
     .then(data => {
-      console.log('👨🏻‍💻retrieved data 💫', data)
+      console.log('👨🏻‍💻 Fetched Discover Movies 💫', data)
       const movies = []
       for (const movie of data.movies) {
         movies.push({ 
@@ -156,17 +156,18 @@ function Home() {
   }, [] )
 
   useEffect(()=> {
-    try {
-    fetch('https://api.themoviedb.org/3/movie/upcoming')
+    fetch('http://localhost:3000/upcoming')
     .then(results=> results.json())
     .then(data => {
-    console.log('🎯 UpcomingMovies data:', data)
-    setTopRatedOnes(data.upcomingMovies)
-    console.log('🙌🏼 fetched upcoming movies', data.upcomingMovies)
+      console.log('Fetched upcomingMovies', data)
+      const upcomingMoviesList = []
+      for (const list of data.upcomingMovies) {
+        upcomingMoviesList.push({
+          title: list.title
+        })
+      }
+      setTopRatedOnes(upcomingMoviesList)
     });
-    } catch {
-      console.error('Failed To Fetch upcomingMovies', err)
-    }
   }, []);
 
   // Liked movies (inverse data flow)
