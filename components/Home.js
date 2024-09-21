@@ -160,7 +160,7 @@ function Home() {
     fetch('https://api.themoviedb.org/3/movie/upcoming')
     .then(results=> results.json())
     .then(data => {
-    console.log('UpcomingMovies data:', data)
+    console.log('🎯 UpcomingMovies data:', data)
     setTopRatedOnes(data.upcomingMovies)
     });
     } catch {
@@ -192,7 +192,7 @@ function Home() {
     </div>
   );
 
-  const topRatedMovies = topRatedOnes.map((data,i) => {
+  const topRatedMovies = topRatedOnes?.map((data,i) => {
       const isLiked2 = likedMovies.some(movie=>movie===data.name);
       return <Movie key={i} isliked2={isLiked2} title={results.name} overview={results.overview} poster={results.backdrop_path} voteAverage={results.vote_average} voteCount={results.vote_count} />
 
