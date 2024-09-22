@@ -130,30 +130,33 @@ function Home() {
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData]=useState([]);
   const [topRatedOnes, setTopRatedOnes]=useState([]);
+  const [moviesError, setMoviesError]=useState(null);
+  const [upcomingMoviesError, setUpcomingMoviesError]=useState(null)
 
 
-
-  useEffect(() => {
-    fetch('https://mymovizpart5backend-snowy.vercel.app/movies')
-    .then(results => results.json())
-    .then(data => {
-      console.log('👨🏻‍💻 Fetched Discover Movies 💫', data)
-      const movies = []
-      for (const movie of data.movies) {
-        movies.push({ 
-          title: movie.title,
-          voteAverage: movie.vote_average,
-          voteCount: movie.vote_count,
-          overview: movie.overview.substring(0,250)+"...",
-          poster: "https://image.tmdb.org/t/p/w500"+movie.poster_path,
-
-          });
-  //   { title: 'The Dark Knight', poster: 'thedarkknight.jpg', voteAverage: 8.5, voteCount: 27_547, overview: 'Batman raises the stakes in his war on crime and sets out to dismantle the remaining criminal organizations that plague the streets.' }
-
-      }
-      setMoviesData(movies)
-    })
-  }, [] )
+  useEffect(()=> {
+      const fetchMovies = async ()=> {
+        try{
+          const response = await fetch('https://mymovizpart5backend-snowy.vercel.app/movies');
+          if (!response.ok) {
+            throw new Error(`HTTP error, status ${response.status}`);
+          }
+          const data = await res.json();
+          console.log('💻 Fetched Discover Movies', data);
+          const movies = data.movies.map(movie =>({
+            title: movie.title,
+            voteAverage: movie.vote_average,
+            voteCount: movie.overview.substring(0,250) + "...",
+            poster: "https://image.tmdb.org/t/p/w500"+movie.poster_path,
+          }));
+          setMoviesData(movies);
+        } catch (error) {
+          console.error('Error whilst fetching movies', error);
+          setMoviesError('Failed to fetch movies, Please try again later');
+        }
+      };
+      fetchMovies()
+  }, [])
 
   useEffect(()=> {
     fetch('http://localhost:3000/upcoming')
