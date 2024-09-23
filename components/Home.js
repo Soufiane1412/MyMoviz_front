@@ -255,6 +255,7 @@ function Home() {
             <div>Loading movies...</div>
           )}
         </MoviesContainer>
+        <MovieTitles>Upcoming Releases</MovieTitles>
         <MoviesContainer>
           {upcomings}
         </MoviesContainer>
