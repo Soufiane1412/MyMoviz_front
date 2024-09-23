@@ -35,7 +35,6 @@ const AppContainer = styled.div`
   flex-direction:column;
   align-items:center;
   flex-wrap:wrap;
-  width:100vw;
   background-color:${props=> props.theme.background};
   color: ${props=>props.theme.text};
 `;
@@ -104,7 +103,7 @@ const MoviesContainer = styled.div`
   justify-content:center;
   overflow:scroll;
   width:100vw;
-  height:100vh;
+  height:80vh;
   mask-image:linear-gradient(to right, black 50px, black calc(80% - 80px), transparent 100%);
   margin-top:0;
   gap:30px;
@@ -131,7 +130,40 @@ function Home() {
   const [moviesData, setMoviesData]=useState([]);
   const [upcomingData, setUpcomingData]=useState([]);
   const [moviesError, setMoviesError]=useState(null);
-  const [upcomingMoviesError, setUpcomingMoviesError]=useState(null)
+  const [upcomingMoviesError, setUpcomingMoviesError]=useState(null);
+  const [fetchedTrendings, setFetchedTrendings]=useState([]);
+
+  //hookState for search feature :
+  const [searchTerm, setSearchTerm]=useState("");
+  const [searchResults, setSearchResults]=useState([]);
+  const [isSearching, setIsSearching]=useState(false);
+
+
+  const handleSearchInputChange = (e)=> {
+    setSearchTerm(e.target.value);
+  };
+
+
+  const handleSearch = async() => {
+    if (!searchTerm.trim()) {
+      setSearchResults([])
+      return;
+    }
+
+    setIsSearching(true);
+    try{
+      const response = await fetch(`http://localhost:3000/search?query=${searchTerm}`)
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+      const data = await response.json();
+      setSearchResults(data.results);
+    } catch(error) {
+      console.error('Error whilst fetching search results',error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
 
   useEffect(()=> {
@@ -244,7 +276,30 @@ function Home() {
           </Popover>
           </ImagePropRight>
         </Header>
-        <InputText placeholder="Find a movie 🍿"></InputText>
+        <InputText
+        placeholder="Find a movie 🍿"
+        value={searchTerm}
+        onChange={handleSearchInputChange}
+        />
+        <Button onClick={handleSearch}>Search</Button>
+        {isSearching ? (
+          <div>Searching... 💭</div>
+        ) : searchResults.length > 0 ? (
+        <MoviesContainer>
+          {searchResults.map((movie, i)=> (
+            <Movie 
+            key={i}
+            updateLikedMovies={updateLikedMovies}
+            isLiked={likedMovies.some(likedMovie =>likedMovie === movie.title)}
+            title={movie.title}
+            poster={movie.poster}
+            voteAverage={movie.voteAverage}
+            />
+          ))}
+        </MoviesContainer>
+        ) : (
+          <div>No results found, try agin 🤔</div>
+        )}
         <MovieTitles>Latest Releases</MovieTitles>
         <MoviesContainer>
           {moviesError ? (

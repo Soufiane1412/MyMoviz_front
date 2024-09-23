@@ -10,6 +10,7 @@ import { Global, css } from '@emotion/react';
 const MovieCard = styled.div`
   display:flex;
   flex-direction:column;
+  width:100vw;
   margin-bottom:0;
   padding-bottom:0;
   height:85vh;
@@ -78,12 +79,14 @@ const MovieOverview = styled.div`
 `;
 
 const MovieInfo = styled.p`
+  color:${props => props.theme.text};
   
 `;
 
 const MovieTitle = styled.h2`
   margin-top:15px;
   font-family:SF Pro, helvetica neue;
+  color:${props=>props.theme.text};
 `; 
 
 
