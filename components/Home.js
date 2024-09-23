@@ -165,7 +165,7 @@ function Home() {
   useEffect(()=> {
     const fetchUpcomingMovies =async ()=> {
       try{
-        const response = await fetch('https://mymovizpart5backend-snowy.vercel.app/upcomingMovies');
+        const response = await fetch('http://localhost:3000/upcomingMovies');
         if (!response.ok) {
           throw new Error(`HTTP Error status: ${response.status}`);
         }
@@ -218,6 +218,10 @@ function Home() {
     const isLiked = likedMovies.some(movie => movie === data.title);
     return <Movie key={i} updateLikedMovies={updateLikedMovies} isLiked={isLiked} title={data.title} overview={data.overview} poster={data.poster} voteAverage={data.voteAverage} voteCount={data.voteCount} />;
   });
+  const upcomings = upcomingData.map((data, i)=> {
+    const isLiked = likedMovies.some(movie => movie === data.title);
+    return <Movie key={i} updateLikedMovies={updateLikedMovies} isLiked={isLiked} title={data.title} overview={data.overview} poster={data.poster} voteAverage={data.voteAverage} voteCount={data.voteCount} />;
+  }) 
 
   const switchMode =()=> isDarkMode ? <FaMoon/> : <FaSun/>
 
@@ -250,6 +254,9 @@ function Home() {
           ) : (
             <div>Loading movies...</div>
           )}
+        </MoviesContainer>
+        <MoviesContainer>
+          {upcomings}
         </MoviesContainer>
       </AppContainer>
     </ThemeProvider>
