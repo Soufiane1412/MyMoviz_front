@@ -78,7 +78,6 @@ const MovieOverview = styled.div`
 `;
 
 const MovieInfo = styled.p`
-
   
 `;
 

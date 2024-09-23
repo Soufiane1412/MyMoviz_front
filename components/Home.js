@@ -129,7 +129,7 @@ function Home() {
 
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData]=useState([]);
-  const [topRatedOnes, setTopRatedOnes]=useState([]);
+  const [upcomingData, setUpcomingData]=useState([]);
   const [moviesError, setMoviesError]=useState(null);
   const [upcomingMoviesError, setUpcomingMoviesError]=useState(null)
 
@@ -141,14 +141,18 @@ function Home() {
           if (!response.ok) {
             throw new Error(`HTTP error, status ${response.status}`);
           }
-          const data = await res.json();
-          console.log('💻 Fetched Discover Movies', data);
-          const movies = data.movies.map(movie =>({
-            title: movie.title,
-            voteAverage: movie.vote_average,
-            voteCount: movie.overview.substring(0,250) + "...",
-            poster: "https://image.tmdb.org/t/p/w500"+movie.poster_path,
-          }));
+          const data = await response.json();
+          console.log('💻 Fetched Discover Movies', data.movies);
+          const movies = []
+          for (const movie of data.movies) {
+            movies.push({
+              title: movie.title,
+              voteAverage: movie.vote_average,
+              voteCount: movie.vote_count,
+              overview: movie.overview.substring(0,250) + "...",
+              poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/"+movie.poster_path,
+            })
+          }
           setMoviesData(movies);
         } catch (error) {
           console.error('Error whilst fetching movies', error);
@@ -157,21 +161,34 @@ function Home() {
       };
       fetchMovies()
   }, [])
-
+  
   useEffect(()=> {
-    fetch('http://localhost:3000/upcoming')
-    .then(results=> results.json())
-    .then(data => {
-      console.log('Fetched upcomingMovies', data)
-      const upcomingMoviesList = []
-      for (const list of data.upcomingMovies) {
-        upcomingMoviesList.push({
-          title: list.title
-        })
+    const fetchUpcomingMovies =async ()=> {
+      try{
+        const response = await fetch('https://mymovizpart5backend-snowy.vercel.app/upcomingMovies');
+        if (!response.ok) {
+          throw new Error(`HTTP Error status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Fetched UpcomingMovies 🚀', data.upcomingMovies)
+        const upcomings = []
+        for (const list of data.upcomingMovies) {
+          upcomings.push({
+              title: list.title,
+              voteAverage: list.vote_average,
+              voteCount: list.vote_count,
+              overview: list.overview.substring(0,250) + "...",
+              poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/"+list.poster_path,
+            })
+          }
+          setUpcomingData(upcomings)
+        } catch (error) {
+          console.error('Failed to fetch /upcomingMovies route: ',error)
+          throw error
+        }
       }
-      setTopRatedOnes(upcomingMoviesList)
-    });
-  }, []);
+      fetchUpcomingMovies()
+    }, [])
 
   // Liked movies (inverse data flow)
   const updateLikedMovies = (movieTitle) => {
@@ -196,13 +213,7 @@ function Home() {
       {likedMoviesPopover}
     </div>
   );
-
-  const topRatedMovies = topRatedOnes?.map((data,i) => {
-      const isLiked2 = likedMovies.some(movie=>movie===data.name);
-      return <Movie key={i} isliked2={isLiked2} title={results.name} overview={results.overview} poster={results.backdrop_path} voteAverage={results.vote_average} voteCount={results.vote_count} />
-
-  });
-
+  
   const movies = moviesData.map((data, i) => {
     const isLiked = likedMovies.some(movie => movie === data.title);
     return <Movie key={i} updateLikedMovies={updateLikedMovies} isLiked={isLiked} title={data.title} overview={data.overview} poster={data.poster} voteAverage={data.voteAverage} voteCount={data.voteCount} />;
@@ -232,10 +243,13 @@ function Home() {
         <InputText placeholder="Find a movie 🍿"></InputText>
         <MovieTitles>Latest Releases</MovieTitles>
         <MoviesContainer>
-          {movies}
-        </MoviesContainer>
-        <MoviesContainer>
-          {topRatedMovies}
+          {moviesError ? (
+            <div>{moviesError}</div>
+          ) : movies.length > 0 ? (
+            movies
+          ) : (
+            <div>Loading movies...</div>
+          )}
         </MoviesContainer>
       </AppContainer>
     </ThemeProvider>
