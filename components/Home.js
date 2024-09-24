@@ -167,7 +167,7 @@ function Home() {
 
     setIsSearching(true);
     try{
-      const response = await fetch(`https://my-moviz-backend-ruddy.vercel.app/search?query=${searchTerm}`)
+      const response = await fetch(`https://my-moviz-backend-rosy.vercel.app/search?query=${searchTerm}`)
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status}`);
       }
@@ -184,7 +184,7 @@ function Home() {
   useEffect(()=> {
       const fetchMovies = async ()=> {
         try{
-          const response = await fetch('https://my-moviz-backend-ruddy.vercel.app/movies');
+          const response = await fetch('https://my-moviz-backend-rosy.vercel.app/movies');
           if (!response.ok) {
             throw new Error(`HTTP error, status ${response.status}`);
           }
@@ -212,7 +212,7 @@ function Home() {
   useEffect(()=> {
     const fetchUpcomingMovies =async ()=> {
       try{
-        const response = await fetch('https://my-moviz-backend-ruddy.vercel.app/upcomingMovies');
+        const response = await fetch('https://my-moviz-backend-rosy.vercel.app/upcomingMovies');
         if (!response.ok) {
           throw new Error(`HTTP Error status: ${response.status}`);
         }
