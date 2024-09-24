@@ -13,11 +13,12 @@ const MovieCard = styled.div`
   width:100vw;
   margin-bottom:0;
   padding-bottom:0;
-  height:85vh;
+  height:65vh;
+  margin:8px;
 `;
 
 const Poster = styled.img`
-  height:55vh;
+  height:45vh;
   width:18vw;
   border-radius:25px;
   box-shadow: 10px 6px 4px #0e0925;
@@ -26,7 +27,7 @@ const Poster = styled.img`
 
 const FlipCard = styled.div`
   background: transparent;
-  height: 55vh;
+  height: 40vh;
   width: 18vw;
   perspective: 800px;
 `;
@@ -80,7 +81,7 @@ const MovieOverview = styled.div`
 
 const MovieInfo = styled.p`
   color:${props => props.theme.text};
-  
+  height:25vh;
 `;
 
 const MovieTitle = styled.h2`

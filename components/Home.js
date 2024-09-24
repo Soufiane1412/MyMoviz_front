@@ -74,17 +74,31 @@ const ThemeToggle = styled.button`
   justify-content:center;
   border-radius:15px;
 `;
+const InputSearch = styled.div`
+display:flex;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+width:70%;
+height:10%;
+
+`;
 
 const InputText = styled.input`
 display:flex;
-margin-top:40px;
 color:black;
 justify-content:center;
-border-radius:10px; 
-border: solid 3px #B5702F;
+border-radius:4px; 
+border: solid 2px ${props=>props.theme.text};
 font-family:helvetica;
 align-items:center;
 width:50%;
+`;
+
+const Press = styled.button`
+backgorund-color:${props=> props.theme.background};
+color:black;
+border: 1px solid ${props=>props.theme.text};
 `;
 
 const MovieTitles = styled.h1`
@@ -102,12 +116,13 @@ const MoviesContainer = styled.div`
   display:flex;
   justify-content:center;
   overflow:scroll;
+  scroll-direction:horizontal;
   width:100vw;
-  height:80vh;
+  height:70vh;
   mask-image:linear-gradient(to right, black 50px, black calc(80% - 80px), transparent 100%);
-  margin-top:0;
-  gap:30px;
-  padding:5px;
+  margin-top:5px;
+  gap:9px;
+
 `;
 
 const GLobalStyles = css `
@@ -152,7 +167,7 @@ function Home() {
 
     setIsSearching(true);
     try{
-      const response = await fetch(`http://localhost:3000/search?query=${searchTerm}`)
+      const response = await fetch(`https://my-moviz-backend-ruddy.vercel.app/search?query=${searchTerm}`)
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status}`);
       }
@@ -169,7 +184,7 @@ function Home() {
   useEffect(()=> {
       const fetchMovies = async ()=> {
         try{
-          const response = await fetch('https://mymovizpart5backend-snowy.vercel.app/movies');
+          const response = await fetch('https://my-moviz-backend-ruddy.vercel.app/movies');
           if (!response.ok) {
             throw new Error(`HTTP error, status ${response.status}`);
           }
@@ -197,7 +212,7 @@ function Home() {
   useEffect(()=> {
     const fetchUpcomingMovies =async ()=> {
       try{
-        const response = await fetch('http://localhost:3000/upcomingMovies');
+        const response = await fetch('https://my-moviz-backend-ruddy.vercel.app/upcomingMovies');
         if (!response.ok) {
           throw new Error(`HTTP Error status: ${response.status}`);
         }
@@ -276,12 +291,14 @@ function Home() {
           </Popover>
           </ImagePropRight>
         </Header>
-        <InputText
-        placeholder="Find a movie 🍿"
-        value={searchTerm}
-        onChange={handleSearchInputChange}
-        />
-        <Button onClick={handleSearch}>Search</Button>
+        <InputSearch>
+          <InputText
+          placeholder="Find a movie 🍿"
+          value={searchTerm}
+          onChange={handleSearchInputChange}
+          />
+          <Press onClick={handleSearch}>Search</Press>
+        </InputSearch>
         {isSearching ? (
           <div>Searching... 💭</div>
         ) : searchResults.length > 0 ? (
