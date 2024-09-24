@@ -13,13 +13,13 @@ const MovieCard = styled.div`
   width:100vw;
   margin-bottom:0;
   padding-bottom:0;
-  height:65vh;
+  height:70vh;
   margin:8px;
 `;
 
 const Poster = styled.img`
-  height:45vh;
-  width:18vw;
+  height:350px;
+  width:250px;
   border-radius:25px;
   box-shadow: 10px 6px 4px #0e0925;
   object-fit:cover;
@@ -27,8 +27,8 @@ const Poster = styled.img`
 
 const FlipCard = styled.div`
   background: transparent;
-  height: 40vh;
-  width: 18vw;
+ height:350px;
+  width:250px;
   perspective: 800px;
 `;
 
