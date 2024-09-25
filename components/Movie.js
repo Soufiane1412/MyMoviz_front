@@ -63,8 +63,8 @@ const FlipCardFront = styled(FlipCardSide)`
 `;
 
 const FlipCardBack = styled(FlipCardSide)`
-  background-color: #2980b9;
-  color: white;
+  background-color: #e39228;
+  color: black;
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
