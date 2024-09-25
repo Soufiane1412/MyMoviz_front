@@ -311,6 +311,7 @@ function Home() {
             title={movie.title}
             poster={movie.poster}
             voteAverage={movie.voteAverage}
+            overveiw={movie.overview.substring(0,250) + "..."}
             />
           ))}
         </MoviesContainer>
