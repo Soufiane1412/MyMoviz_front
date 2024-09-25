@@ -63,7 +63,7 @@ const FlipCardFront = styled(FlipCardSide)`
 `;
 
 const FlipCardBack = styled(FlipCardSide)`
-  background-color: #e39228;
+  background-color: #e79a36;
   color: black;
   transform: rotateY(180deg);
   display: flex;
@@ -75,7 +75,7 @@ const FlipCardBack = styled(FlipCardSide)`
 
 const MovieOverview = styled.div`
   text-align:center;
-  color:${props=>props.theme.text};
+  color:black;
   font-size:15px;
 `;
 
